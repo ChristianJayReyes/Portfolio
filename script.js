@@ -1,8 +1,19 @@
+window.addEventListener("load", () => {
+  const welcomeScreen = document.getElementById("welcome-screen");
+  const mainContent = document.getElementById("main-content");
+
+  // Wait 3 seconds before showing the landing page
+  setTimeout(() => {
+    welcomeScreen.style.display = "none";
+    mainContent.style.display = "block";
+  }, 3000);
+});
+
 // ===============================
 // Role Text Animation
 // ===============================
 const roleElement = document.getElementById("role");
-const roles = ["Full Stack Developer", "Software Developer"];
+const roles = ["FULL STACK DEVELOPER", "SOFTWARE DEVELOPER"];
 let currentIndex = 0;
 
 // Smooth role changing animation every 3 seconds
@@ -50,12 +61,14 @@ function updateTheme() {
     document.querySelectorAll(".nav-links a").forEach(a => a.style.color = "white");
     document.querySelectorAll(".icon").forEach(icon => icon.style.filter = "grayscale(100%) brightness(0.9)");
     document.getElementById("name").style.color = "white";
+    document.getElementById("me").style.color = "white";
   } else {
     // Light Mode
     bodyEl.style.backgroundColor = "#f5f5f5";
     bodyEl.style.color = "#111";
-    document.querySelectorAll(".nav-links a").forEach(a => a.style.color = "#111");
+    document.querySelectorAll(".nav-links a").forEach(a => a.style.color = "#f5f5f5");
     document.querySelectorAll(".icon").forEach(icon => icon.style.filter = "none");
     document.getElementById("name").style.color = "#111";
+    document.getElementById("me").style.color = "#111";
   }
 }
