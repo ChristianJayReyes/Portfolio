@@ -6,6 +6,7 @@ body {
   font-family: "Poppins", Arial, sans-serif;
   color: white;
   transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
 }
 
 /* ---------- NAVBAR ---------- */
@@ -18,6 +19,7 @@ nav {
   backdrop-filter: blur(6px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
+  flex-wrap: wrap;
 }
 
 .name {
@@ -40,6 +42,7 @@ nav {
   gap: 40px;
   margin: 0;
   text-transform: uppercase;
+  flex-wrap: wrap;
 }
 
 .nav-links li a {
@@ -51,7 +54,6 @@ nav {
   transition: color 0.3s ease;
 }
 
-/* underline hover effect */
 .nav-links li a::after {
   content: "";
   position: absolute;
@@ -183,7 +185,7 @@ nav {
   background-color: #0a0a0a;
 }
 
-/* Splash Screen */
+/* ---------- SPLASH SCREEN ---------- */
 #welcome-screen {
   position: fixed;
   top: 0;
@@ -207,7 +209,6 @@ nav {
   margin-bottom: 20px;
 }
 
-/* Simple Loader Circle */
 .loader {
   border: 5px solid #444;
   border-top: 5px solid #a05252;
@@ -217,7 +218,7 @@ nav {
   animation: spin 1s linear infinite;
 }
 
-/* Animations */
+/* ---------- ANIMATIONS ---------- */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -227,47 +228,104 @@ nav {
   to { opacity: 0; visibility: hidden; }
 }
 
-
-/* ---------- ANIMATIONS ---------- */
 @keyframes turnOn {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(36px);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(36px); }
 }
 
 @keyframes turnOff {
-  0% {
-    transform: translateX(36px);
-  }
-  100% {
-    transform: translateX(0);
-  }
+  0% { transform: translateX(36px); }
+  100% { transform: translateX(0); }
 }
 
 /* ---------- RESPONSIVE DESIGN ---------- */
-@media (max-width: 1000px) {
-  .main-image {
-    margin: 40px auto;
-    display: block;
+
+/* Tablets */
+@media (max-width: 1024px) {
+  nav {
+    padding: 20px 30px;
   }
 
-  .intro-text,
+  .main-image {
+    width: 300px;
+    margin-left: 100px;
+  }
+
+  .intro-text {
+    margin-left: 500px;
+    font-size: 1.1rem;
+    margin-top: -320px;
+  }
+
   .social-icons,
   .download-btn {
-    margin: 20px auto;
-    text-align: center;
+    margin-left: 500px;
+  }
+}
+
+/* Mobile Landscape */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
   }
 
   .nav-links {
     gap: 20px;
   }
 
-  .name {
-    font-size: 22px;
+  .main-image {
+    width: 250px;
+    margin: 40px auto 0;
+    display: block;
+  }
+
+  .intro-text {
+    margin: 20px auto 0;
+    font-size: 1.1rem;
+    text-align: center;
+    max-width: 90%;
+  }
+
+  .social-icons {
+    margin: 20px auto 0;
+    justify-content: center;
+  }
+
+  .download-btn {
+    margin: 25px auto 0;
+    display: block;
   }
 }
 
+/* Mobile Portrait */
+@media (max-width: 480px) {
+  .name {
+    font-size: 22px;
+  }
 
+  .nav-links {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .main-image {
+    width: 220px;
+  }
+
+  .intro-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-top: 10px;
+  }
+
+  .social-icons {
+    gap: 20px;
+  }
+
+  .download-btn {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
