@@ -111,8 +111,25 @@ if (mobileMenuToggle && navLinks) {
   mobileMenuToggle.addEventListener('click', function() {
     this.classList.toggle('active');
     navLinks.classList.toggle('active');
-    document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+    if (navLinks.classList.contains('active')) {
+      document.body.classList.add('menu-open');
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.classList.remove('menu-open');
+      document.body.style.overflow = '';
+    }
   });
+
+  // Close menu button functionality
+  const menuCloseBtn = document.getElementById('menuCloseBtn');
+  if (menuCloseBtn) {
+    menuCloseBtn.addEventListener('click', function() {
+      mobileMenuToggle.classList.remove('active');
+      navLinks.classList.remove('active');
+      document.body.classList.remove('menu-open');
+      document.body.style.overflow = '';
+    });
+  }
 
   // Close menu when clicking on a link
   const navLinkItems = navLinks.querySelectorAll('a');
@@ -120,19 +137,40 @@ if (mobileMenuToggle && navLinks) {
     link.addEventListener('click', function() {
       mobileMenuToggle.classList.remove('active');
       navLinks.classList.remove('active');
+      document.body.classList.remove('menu-open');
       document.body.style.overflow = '';
     });
   });
 
-  // Close menu when clicking outside
+  // Close menu when clicking outside or on overlay
   document.addEventListener('click', function(event) {
     const isClickInsideNav = navLinks.contains(event.target);
     const isClickOnToggle = mobileMenuToggle.contains(event.target);
     
+    // Check if click is on the overlay (body::after pseudo-element area)
+    // Since we can't directly detect ::after clicks, we check if it's outside nav and toggle
     if (!isClickInsideNav && !isClickOnToggle && navLinks.classList.contains('active')) {
       mobileMenuToggle.classList.remove('active');
       navLinks.classList.remove('active');
+      document.body.classList.remove('menu-open');
       document.body.style.overflow = '';
+    }
+  });
+
+  // Also close menu when clicking on the overlay area (using mousedown for better detection)
+  document.addEventListener('mousedown', function(event) {
+    if (navLinks.classList.contains('active')) {
+      const isClickInsideNav = navLinks.contains(event.target);
+      const isClickOnToggle = mobileMenuToggle.contains(event.target);
+      const isClickOnNav = event.target.closest('nav');
+      
+      // If click is outside nav area, close menu
+      if (!isClickInsideNav && !isClickOnToggle && !isClickOnNav) {
+        mobileMenuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        document.body.style.overflow = '';
+      }
     }
   });
 }

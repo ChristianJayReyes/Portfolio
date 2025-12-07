@@ -13,6 +13,20 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+body.menu-open {
+  overflow: hidden;
+  height: 100vh;
+  position: relative;
+}
+
+/* Ensure overlay only appears on mobile - hide on desktop */
+@media (min-width: 769px) {
+  body::after {
+    display: none !important;
+  }
 }
 
 /* Better touch targets for mobile */
@@ -22,6 +36,20 @@ a, button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Prevent text overflow */
+* {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Ensure containers don't overflow */
+.page-container,
+.hero-container,
+.stats-container {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* ---------- NAVBAR ---------- */
@@ -58,6 +86,15 @@ nav {
   margin: 0;
   text-transform: uppercase;
   flex-wrap: wrap;
+}
+
+/* Hide mobile menu header on desktop */
+.mobile-menu-header {
+  display: none;
+}
+
+.menu-close-btn {
+  display: none;
 }
 
 .nav-links li a {
@@ -538,6 +575,9 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
   backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .quick-link-card::before {
@@ -572,9 +612,11 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
 .quick-link-card h3 {
   color: #ff8e8e;
   font-size: 1.5rem;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  margin-top: 0;
   position: relative;
   z-index: 1;
+  width: 100%;
 }
 
 .quick-link-card p {
@@ -582,6 +624,9 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
   font-size: 1rem;
   position: relative;
   z-index: 1;
+  margin-top: 0;
+  margin-bottom: 0;
+  width: 100%;
 }
 
 /* ---------- DOWNLOAD BUTTON ---------- */
@@ -621,6 +666,11 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .circle {
@@ -628,11 +678,12 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
   height: 28px;
   background-color: #fff;
   border-radius: 50%;
-  top: 3px;
-  left: 4px;
-  position: absolute;
+  position: relative;
+  left: 0;
   animation: turnOff 0.3s linear forwards;
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
 .input:checked + .label {
@@ -697,6 +748,11 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
   100% { transform: translateX(0); }
 }
 
+/* Ensure circle stays inside label */
+.label {
+  overflow: hidden;
+}
+
 /* ---------- RESPONSIVE DESIGN ---------- */
 
 /* Large Laptops and Desktops */
@@ -739,8 +795,45 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
     gap: 30px;
   }
 
+  .stat-card {
+    padding: 30px 25px;
+  }
+
+  .stat-number {
+    font-size: 2.8rem;
+  }
+
+  .stat-label {
+    font-size: 1rem;
+  }
+
   .section-title {
     font-size: 2.2rem;
+  }
+
+  /* Page-specific styles */
+  .page-container {
+    padding: 0 30px;
+    margin: 50px auto;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+  }
+
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
   }
 }
 
@@ -763,36 +856,182 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
     display: flex;
   }
 
-  .nav-links {
+  /* Mobile menu backdrop overlay - only on mobile and when menu is open */
+  body::after {
+    content: '';
     position: fixed;
-    top: 70px;
+    top: 0;
     left: 0;
     width: 100%;
-    background: rgba(20, 20, 20, 0.98);
-    backdrop-filter: blur(10px);
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    display: none;
+  }
+
+  body.menu-open::after {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.3s ease, visibility 0s linear 0s;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 320px;
+    max-width: 85%;
+    height: 100vh;
+    background: #1a1a1a;
     flex-direction: column;
-    padding: 30px 20px;
-    gap: 25px;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 1000;
-    border-bottom: 1px solid rgba(255, 142, 142, 0.2);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 0;
+    gap: 0;
+    transform: translateX(100%);
+    transition: transform 0.3s ease, visibility 0.3s ease, opacity 0.3s ease;
+    z-index: 9999;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    overflow-y: auto;
   }
 
   .nav-links.active {
     transform: translateX(0);
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Mobile Menu Header - Show on mobile */
+  .mobile-menu-header {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #ff8e8e, #ff6262);
+    width: 100%;
+    margin: 0;
+    list-style: none;
+  }
+
+  .menu-close-btn {
+    display: flex !important;
+  }
+
+  .menu-logo {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+  }
+
+  .menu-close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #ffffff;
+    font-size: 24px;
+    line-height: 1;
+    padding: 0;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .menu-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+  }
+
+  .menu-close-btn span {
+    display: block;
+    font-weight: 300;
   }
 
   .nav-links li {
     width: 100%;
-    text-align: center;
+    text-align: left;
+    margin: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .nav-links li:first-child {
+    border-bottom: none;
   }
 
   .nav-links li a {
-    font-size: 1.1rem;
-    padding: 10px 0;
+    font-size: 1rem;
+    padding: 18px 20px;
     display: block;
+    color: #fff;
+    font-weight: 500;
+    text-transform: none;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .nav-links li a::after {
+    display: none;
+  }
+
+  .nav-links li a:hover {
+    color: #ff8e8e;
+    background: rgba(255, 142, 142, 0.05);
+    padding-left: 25px;
+  }
+
+  .nav-links li a.active {
+    color: #ff8e8e;
+    background: rgba(255, 142, 142, 0.1);
+    font-weight: 600;
+  }
+
+  .nav-links li a.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(135deg, #ff8e8e, #ff6262);
+  }
+
+  /* Light mode support for mobile menu */
+  body.light-mode .nav-links {
+    background: #f8f8f8;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
+  }
+
+  body.light-mode .nav-links li {
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+  }
+
+  body.light-mode .nav-links li a {
+    color: #333;
+  }
+
+  body.light-mode .nav-links li a:hover {
+    background: rgba(255, 142, 142, 0.1);
+    color: #ff8e8e;
+  }
+
+  body.light-mode .nav-links li a.active {
+    background: rgba(255, 142, 142, 0.15);
+    color: #ff8e8e;
   }
 
   .label {
@@ -892,6 +1131,10 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
     font-size: 2.5rem;
   }
 
+  .stat-label {
+    font-size: 0.95rem;
+  }
+
   .about-section {
     padding: 80px 0;
   }
@@ -943,6 +1186,11 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
   /* Page-specific responsive styles */
   .page-container {
     padding: 0 20px;
+    margin: 40px auto;
+  }
+
+  .page-header {
+    margin-bottom: 40px;
   }
 
   .services-grid {
@@ -966,6 +1214,37 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
   .timeline-marker {
     left: -27px;
   }
+
+  /* Page-specific responsive styles */
+  .page-container {
+    margin: 40px auto;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .contact-form-container {
+    padding: 25px;
+  }
+
+  .certifications-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 
 /* Mobile Devices */
@@ -979,16 +1258,29 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
   }
 
   .nav-links {
-    top: 60px;
+    width: 300px;
+    max-width: 90%;
+  }
+
+  .mobile-menu-header {
     padding: 20px 15px;
-    gap: 20px;
-    max-height: calc(100vh - 60px);
-    overflow-y: auto;
+  }
+
+  .menu-logo {
+    font-size: 16px;
+  }
+
+  .menu-close-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 22px;
+    min-width: 32px;
+    min-height: 32px;
   }
 
   .nav-links li a {
-    font-size: 1rem;
-    padding: 12px 0;
+    padding: 16px 15px;
+    font-size: 0.95rem;
   }
 
   /* Fix hero section order on mobile */
@@ -1084,7 +1376,8 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
   }
 
   .stats-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    gap: 15px;
     gap: 15px;
   }
 
@@ -1195,6 +1488,26 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
   }
 
   /* Contact page mobile */
+  .contact-info {
+    gap: 20px;
+  }
+
+  .info-card {
+    padding: 25px 20px;
+  }
+
+  .info-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .info-icon {
+    font-size: 2rem;
+  }
+
+  .social-section {
+    padding: 25px 20px;
+  }
+
   .contact-form-container {
     padding: 25px 20px;
   }
@@ -1244,6 +1557,62 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
     width: 100%;
     text-align: center;
   }
+
+  /* Page-specific mobile styles */
+  .page-container {
+    margin: 30px auto;
+    padding: 0 15px;
+  }
+
+  .page-header {
+    margin-bottom: 30px;
+  }
+
+  .page-title {
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+
+  .page-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .service-card-modern,
+  .info-card,
+  .cert-card {
+    padding: 20px;
+  }
+
+  .category-title {
+    font-size: 1.5rem;
+  }
+
+  .timeline-content {
+    padding: 20px;
+  }
+
+  .project-card {
+    padding: 20px;
+  }
+
+  .project-title {
+    font-size: 1.3rem;
+  }
+
+  .contact-form-container {
+    padding: 20px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+  }
 }
 
 /* Extra Small Devices */
@@ -1280,6 +1649,42 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
 
   .stat-label {
     font-size: 0.85rem;
+  }
+
+  /* Extra small page-specific styles */
+  .page-title {
+    font-size: 1.6rem;
+  }
+
+  .page-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .service-card-modern,
+  .info-card,
+  .project-card,
+  .social-section {
+    padding: 18px;
+  }
+
+  .info-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .info-icon {
+    font-size: 1.8rem;
+  }
+
+  .contact-info {
+    gap: 15px;
+  }
+
+  .category-title {
+    font-size: 1.3rem;
+  }
+
+  .timeline-content {
+    padding: 18px;
   }
 }
 
@@ -2002,102 +2407,5 @@ body.light-mode .form-group textarea::placeholder {
   transform: none;
 }
 
-/* ---------- RESPONSIVE FOR NEW PAGES ---------- */
-@media (max-width: 1024px) {
-  .page-container {
-    padding: 0 30px;
-  }
-
-  .page-title {
-    font-size: 2.5rem;
-  }
-
-  .services-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-  }
-
-  .contact-wrapper {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-}
-
-@media (max-width: 768px) {
-  .page-container {
-    margin: 40px auto;
-    padding: 0 20px;
-  }
-
-  .page-title {
-    font-size: 2rem;
-  }
-
-  .page-subtitle {
-    font-size: 1rem;
-  }
-
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .timeline {
-    padding-left: 30px;
-  }
-
-  .timeline::before {
-    left: 15px;
-  }
-
-  .timeline-marker {
-    left: -27px;
-  }
-
-  .certifications-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-form-container {
-    padding: 25px;
-  }
-}
-
-@media (max-width: 480px) {
-  .page-title {
-    font-size: 1.8rem;
-  }
-
-  .service-card-modern,
-  .info-card,
-  .cert-card {
-    padding: 20px;
-  }
-
-  .category-title {
-    font-size: 1.5rem;
-  }
-
-  .timeline-content {
-    padding: 20px;
-  }
-
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .project-card {
-    padding: 20px;
-  }
-
-  .project-title {
-    font-size: 1.3rem;
-  }
-
-  .project-links {
-    flex-direction: column;
-  }
-
-  .project-link {
-    text-align: center;
-  }
-}
+/* ---------- CONSOLIDATED RESPONSIVE STYLES FOR ALL PAGES ---------- */
+/* These styles are merged into the main responsive sections above to avoid duplication */
