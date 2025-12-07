@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Home - Christian Jay Reyes</title>
   </head>
   <body>
     <!-- Splash / Loading Screen -->
@@ -15,36 +18,147 @@
     <nav>
       <div class="name">Christian Jay Reyes</div>
       <ul class="nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="#about">Services</a></li>
-        <li><a href="#projects">Skills</a></li>
-        <li><a href="#contact">Education</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
       <input type="checkbox" id="dark-mode" class="input" />
       <label for="dark-mode" class="label">
         <div class="circle"></div>
       </label>
     </nav>
-    <div>
-      <img src="images/main.jfif" alt="Main Image" class="main-image" />
-      <div class="intro-text">
-        <h1 id="name">Hi, I'm Cjay</h1>
-        <p id="me">I'm a <span id="role">Full Stack Developer</span></p>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <p class="hero-greeting">Hello, I'm</p>
+            <h1 class="hero-name">Christian Jay Reyes</h1>
+            <h2 class="hero-title">
+              I'm a <span id="role" class="role-highlight">Full Stack Developer</span>
+            </h2>
+            <p class="hero-description">
+              Passionate developer crafting innovative web solutions with modern technologies. 
+              Transforming ideas into scalable, user-friendly applications.
+            </p>
+            <div class="hero-buttons">
+              <a href="contact.html" class="btn-primary">Get In Touch</a>
+              <a href="#projects" class="btn-secondary">View My Work</a>
+            </div>
+            <div class="social-icons">
+              <a href="https://github.com/ChristianJayReyes" target="_blank" aria-label="GitHub">
+                <img src="images/git_logo.png" alt="GitHub" class="icon" />
+              </a>
+              <a href="https://www.facebook.com/christianjay.reyes.9" target="_blank" aria-label="Facebook">
+                <img src="images/fb_icon.png" alt="Facebook" class="icon" />
+              </a>
+              <a href="#" aria-label="Instagram">
+                <img src="images/insta_logo.png" alt="Instagram" class="icon" />
+              </a>
+            </div>
+          </div>
+          <div class="hero-image">
+            <div class="image-wrapper">
+              <img src="images/main.jfif" alt="Christian Jay Reyes" class="main-image" />
+              <div class="image-glow"></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="social-icons">
-        <a href="https://github.com/ChristianJayReyes" target="_blank"
-          ><img src="images/git_logo.png" alt="GitHub" class="icon"
-        /></a>
-        <a href="https://www.facebook.com/christianjay.reyes.9" target="_blank"
-          ><img src="images/fb_icon.png" alt="Facebook" class="icon"
-        /></a>
-        <a href="#"
-          ><img src="images/insta_logo.png" alt="Instagram" class="icon"
-        /></a>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-number">1+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3+</div>
+          <div class="stat-label">Projects Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5+</div>
+          <div class="stat-label">Technologies</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">95%</div>
+          <div class="stat-label">Client Satisfaction</div>
+        </div>
       </div>
-      <button class="download-btn">Download CV</button>
-    </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+      <div class="page-container">
+        <div class="about-content">
+          <div class="about-text">
+            <h2 class="section-title">About Me</h2>
+            <p class="about-description">
+              I'm a dedicated Full Stack Developer with a passion for creating exceptional digital experiences. 
+              My expertise spans across frontend and backend technologies, allowing me to build complete, 
+              end-to-end solutions that are both functional and beautiful.
+            </p>
+            <p class="about-description">
+              I specialize in modern web technologies including React, Node.js, and various databases. 
+              My capstone project, Rosario Resort and Hotel, showcases my ability to develop comprehensive 
+              full-stack applications with attention to detail and user experience.
+            </p>
+            <div class="about-highlights">
+              <div class="highlight-item">
+                <span class="highlight-icon">✓</span>
+                <span>Full Stack Development</span>
+              </div>
+              <div class="highlight-item">
+                <span class="highlight-icon">✓</span>
+                <span>Responsive Design</span>
+              </div>
+              <div class="highlight-item">
+                <span class="highlight-icon">✓</span>
+                <span>Clean Code Practices</span>
+              </div>
+              <div class="highlight-item">
+                <span class="highlight-icon">✓</span>
+                <span>Agile Methodology</span>
+              </div>
+            </div>
+            <a href="contact.html" class="download-btn">Download CV</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Links Section -->
+    <section class="quick-links-section" id="projects">
+      <div class="page-container">
+        <h2 class="section-title">Explore My Work</h2>
+        <div class="quick-links-grid">
+          <a href="services.html" class="quick-link-card">
+            <div class="quick-link-icon">💼</div>
+            <h3>Services</h3>
+            <p>See what I can do for you</p>
+          </a>
+          <a href="skills.html" class="quick-link-card">
+            <div class="quick-link-icon">🛠️</div>
+            <h3>Skills</h3>
+            <p>Technologies I work with</p>
+          </a>
+          <a href="education.html" class="quick-link-card">
+            <div class="quick-link-icon">🎓</div>
+            <h3>Education</h3>
+            <p>My academic journey</p>
+          </a>
+          <a href="contact.html" class="quick-link-card">
+            <div class="quick-link-icon">📧</div>
+            <h3>Contact</h3>
+            <p>Let's work together</p>
+          </a>
+        </div>
+      </div>
+    </section>
 
     <script src="script.js"></script>
   </body>
