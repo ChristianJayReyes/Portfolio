@@ -1,4 +1,8 @@
 /* ---------- GLOBAL STYLES ---------- */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -7,6 +11,17 @@ body {
   color: white;
   transition: background-color 0.4s ease, color 0.4s ease;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Better touch targets for mobile */
+a, button {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ---------- NAVBAR ---------- */
@@ -79,6 +94,45 @@ nav {
 
 .nav-links li a.active::after {
   width: 100%;
+}
+
+/* ---------- NAV CONTROLS ---------- */
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ---------- MOBILE MENU TOGGLE ---------- */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+}
+
+.mobile-menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background: #ff8e8e;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
 }
 
 /* ---------- HERO SECTION ---------- */
@@ -639,49 +693,18 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
 
 /* ---------- RESPONSIVE DESIGN ---------- */
 
-/* Tablets */
-@media (max-width: 1024px) {
-  nav {
-    padding: 20px 30px;
-  }
-
-  .main-image {
-    width: 300px;
-    margin-left: 100px;
-  }
-
-  .intro-text {
-    margin-left: 500px;
-    font-size: 1.1rem;
-    margin-top: -320px;
-  }
-
-  .social-icons,
-  .download-btn {
-    margin-left: 500px;
+/* Large Laptops and Desktops */
+@media (max-width: 1440px) {
+  .hero-container,
+  .page-container {
+    max-width: 1200px;
   }
 }
 
-/* Mobile Landscape */
-@media (max-width: 768px) {
+/* Laptops */
+@media (max-width: 1024px) {
   nav {
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px;
-  }
-
-  .nav-links {
-    gap: 20px;
-  }
-
-  .hero-section {
-    padding: 60px 20px;
-  }
-
-  .hero-content {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    text-align: center;
+    padding: 20px 30px;
   }
 
   .hero-name {
@@ -692,51 +715,96 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
     font-size: 1.8rem;
   }
 
+  .hero-content {
+    gap: 40px;
+  }
+
   .main-image {
-    width: 320px;
-    height: 320px;
-    margin: 0 auto;
+    width: 350px;
+    height: 350px;
   }
 
   .image-glow {
-    width: 340px;
-    height: 340px;
-  }
-
-  .hero-buttons {
-    justify-content: center;
+    width: 370px;
+    height: 370px;
   }
 
   .stats-container {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
   }
 
-  .about-section {
-    padding: 80px 0;
-  }
-
-  .quick-links-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .social-icons {
-    justify-content: center;
+  .section-title {
+    font-size: 2.2rem;
   }
 }
 
-/* Mobile Portrait */
-@media (max-width: 480px) {
-  .name {
-    font-size: 22px;
+/* Tablets and Small Laptops */
+@media (max-width: 768px) {
+  nav {
+    padding: 15px 20px;
+    position: relative;
   }
 
-  .nav-links {
-    flex-direction: column;
+  .name {
+    font-size: 24px;
+  }
+
+  .nav-controls {
     gap: 15px;
   }
 
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: rgba(20, 20, 20, 0.98);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    padding: 30px 20px;
+    gap: 25px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 142, 142, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-links.active {
+    transform: translateX(0);
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-links li a {
+    font-size: 1.1rem;
+    padding: 10px 0;
+    display: block;
+  }
+
+  .label {
+    position: static;
+    margin: 0;
+  }
+
+  /* Ensure touch targets are adequate */
+  .btn-primary,
+  .btn-secondary,
+  .download-btn,
+  .submit-btn,
+  .project-link {
+    min-height: 44px;
+  }
+
   .hero-section {
-    padding: 40px 20px;
+    padding: 60px 20px;
     min-height: auto;
   }
 
@@ -747,35 +815,42 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
   }
 
   .hero-name {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
   }
 
   .hero-title {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
 
   .hero-description {
     font-size: 1rem;
+    max-width: 100%;
   }
 
   .main-image {
-    width: 280px;
-    height: 280px;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
   }
 
   .image-glow {
-    width: 300px;
-    height: 300px;
+    width: 320px;
+    height: 320px;
   }
 
   .hero-buttons {
     justify-content: center;
+    flex-wrap: wrap;
   }
 
   .btn-primary,
   .btn-secondary {
-    padding: 12px 24px;
-    font-size: 0.9rem;
+    padding: 12px 28px;
+    font-size: 0.95rem;
+  }
+
+  .stats-section {
+    padding: 50px 20px;
   }
 
   .stats-container {
@@ -784,15 +859,15 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
   }
 
   .stat-card {
-    padding: 20px;
+    padding: 25px 20px;
   }
 
   .stat-number {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .about-section {
-    padding: 60px 0;
+    padding: 80px 0;
   }
 
   .section-title {
@@ -800,21 +875,337 @@ body:not(.light-mode) .hero-section .icon[alt="GitHub"]:hover {
   }
 
   .about-highlights {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .quick-links-section {
+    padding: 80px 0;
   }
 
   .quick-links-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .quick-link-card {
+    padding: 30px 20px;
   }
 
   .social-icons {
     justify-content: center;
+  }
+
+  /* Page-specific responsive styles */
+  .page-container {
+    padding: 0 20px;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+  }
+
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .timeline {
+    padding-left: 30px;
+  }
+
+  .timeline::before {
+    left: 15px;
+  }
+
+  .timeline-marker {
+    left: -27px;
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+  nav {
+    padding: 12px 15px;
+  }
+
+  .name {
+    font-size: 20px;
+  }
+
+  .nav-links {
+    top: 60px;
+    padding: 20px 15px;
     gap: 20px;
   }
 
+  .nav-links li a {
+    font-size: 1rem;
+  }
+
+  .hero-section {
+    padding: 40px 15px;
+    min-height: auto;
+  }
+
+  .hero-content {
+    gap: 30px;
+  }
+
+  .hero-name {
+    font-size: 2.2rem;
+  }
+
+  .hero-title {
+    font-size: 1.4rem;
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+  }
+
+  .main-image {
+    width: 250px;
+    height: 250px;
+  }
+
+  .image-glow {
+    width: 270px;
+    height: 270px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .stats-section {
+    padding: 40px 15px;
+  }
+
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .stat-card {
+    padding: 20px 15px;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+  }
+
+  .about-section {
+    padding: 60px 0;
+  }
+
+  .page-container {
+    padding: 0 15px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+  }
+
+  .about-description {
+    font-size: 1rem;
+  }
+
+  .about-highlights {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .highlight-item {
+    padding: 12px;
+  }
+
+  .quick-links-section {
+    padding: 60px 0;
+  }
+
+  .quick-links-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .quick-link-card {
+    padding: 30px 20px;
+  }
+
+  .quick-link-icon {
+    font-size: 3rem;
+  }
+
+  .quick-link-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .social-icons {
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .icon {
+    width: 35px;
+    height: 35px;
+  }
+
   .download-btn {
-    font-size: 16px;
-    padding: 12px 24px;
+    font-size: 0.95rem;
+    padding: 12px 28px;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Services page mobile */
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .service-card-modern {
+    padding: 25px 20px;
+  }
+
+  /* Skills page mobile */
+  .skills-grid {
+    gap: 20px;
+  }
+
+  .skill-item {
+    gap: 8px;
+  }
+
+  .skill-name {
+    font-size: 1rem;
+  }
+
+  /* Contact page mobile */
+  .contact-form-container {
+    padding: 25px 20px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+  }
+
+  /* Education page mobile */
+  .timeline {
+    padding-left: 25px;
+  }
+
+  .timeline-content {
+    padding: 20px;
+  }
+
+  .certifications-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Projects mobile */
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card {
+    padding: 25px 20px;
+  }
+
+  .project-title {
+    font-size: 1.3rem;
+  }
+
+  .project-links {
+    flex-direction: column;
+  }
+
+  .project-link {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 360px) {
+  .hero-name {
+    font-size: 1.8rem;
+  }
+
+  .hero-title {
+    font-size: 1.2rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .name {
+    font-size: 18px;
+  }
+
+  .main-image {
+    width: 220px;
+    height: 220px;
+  }
+
+  .image-glow {
+    width: 240px;
+    height: 240px;
+  }
+
+  .stat-number {
+    font-size: 1.8rem;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+  }
+}
+
+/* Ensure all images are responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Landscape orientation for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero-section {
+    min-height: auto;
+    padding: 40px 20px;
+  }
+
+  .hero-content {
+    gap: 30px;
+  }
+
+  .main-image {
+    width: 250px;
+    height: 250px;
   }
 }
 

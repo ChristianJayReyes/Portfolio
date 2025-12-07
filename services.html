@@ -12,17 +12,24 @@
   <body>
     <nav>
       <div class="name">Christian Jay Reyes</div>
-      <ul class="nav-links">
+      <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="services.html" class="active">Services</a></li>
         <li><a href="skills.html">Skills</a></li>
         <li><a href="education.html">Education</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-      <input type="checkbox" id="dark-mode" class="input" />
-      <label for="dark-mode" class="label">
-        <div class="circle"></div>
-      </label>
+      <div class="nav-controls">
+        <input type="checkbox" id="dark-mode" class="input" />
+        <label for="dark-mode" class="label">
+          <div class="circle"></div>
+        </label>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </nav>
 
     <div class="page-container">
