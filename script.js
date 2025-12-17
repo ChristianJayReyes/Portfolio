@@ -12,10 +12,9 @@ window.addEventListener("load", () => {
 // Role Text Animation
 const roleElement = document.getElementById("role");
 if (roleElement) {
-  const roles = ["FULL STACK DEVELOPER", "SOFTWARE DEVELOPER"];
+  const roles = ["FULL STACK DEVELOPER", "WEB DEVELOPER"];
   let currentIndex = 0;
 
-  // Smooth role changing animation every 3 seconds
   setInterval(() => {
     currentIndex = (currentIndex + 1) % roles.length;
     roleElement.style.opacity = 0;
