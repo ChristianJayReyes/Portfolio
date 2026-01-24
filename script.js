@@ -100,9 +100,8 @@ function updateTheme() {
   }
 }
 
-// ===============================
 // Mobile Menu Toggle
-// ===============================
+
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const navLinks = document.getElementById('navLinks');
 
@@ -146,8 +145,6 @@ if (mobileMenuToggle && navLinks) {
     const isClickInsideNav = navLinks.contains(event.target);
     const isClickOnToggle = mobileMenuToggle.contains(event.target);
     
-    // Check if click is on the overlay (body::after pseudo-element area)
-    // Since we can't directly detect ::after clicks, we check if it's outside nav and toggle
     if (!isClickInsideNav && !isClickOnToggle && navLinks.classList.contains('active')) {
       mobileMenuToggle.classList.remove('active');
       navLinks.classList.remove('active');
@@ -156,14 +153,14 @@ if (mobileMenuToggle && navLinks) {
     }
   });
 
-  // Also close menu when clicking on the overlay area (using mousedown for better detection)
+
   document.addEventListener('mousedown', function(event) {
     if (navLinks.classList.contains('active')) {
       const isClickInsideNav = navLinks.contains(event.target);
       const isClickOnToggle = mobileMenuToggle.contains(event.target);
       const isClickOnNav = event.target.closest('nav');
       
-      // If click is outside nav area, close menu
+
       if (!isClickInsideNav && !isClickOnToggle && !isClickOnNav) {
         mobileMenuToggle.classList.remove('active');
         navLinks.classList.remove('active');
@@ -171,5 +168,84 @@ if (mobileMenuToggle && navLinks) {
         document.body.style.overflow = '';
       }
     }
+  });
+}
+
+// CV Download Functionality
+const downloadCVBtn = document.getElementById('downloadCVBtn');
+if (downloadCVBtn) {
+  downloadCVBtn.addEventListener('click', async function(e) {
+    e.preventDefault();
+    
+    // Path to your CV file - make sure this matches your actual filename exactly
+    const cvPath = 'Reyes, Christian Jay-Resume.pdf';
+    const fileName = 'Reyes, Christian Jay-Resume.pdf';
+    
+    // Check if we're running from a web server (http/https) or file system (file://)
+    const isWebServer = window.location.protocol === 'http:' || window.location.protocol === 'https:';
+    
+    if (isWebServer) {
+      // Use fetch + blob method for web servers (more reliable)
+      try {
+        const response = await fetch(cvPath, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/pdf',
+          },
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Convert response to blob
+        const blob = await response.blob();
+        
+        // Verify blob is not empty
+        if (blob.size === 0) {
+          throw new Error('Downloaded file is empty');
+        }
+        
+        // Create a blob URL
+        const blobUrl = window.URL.createObjectURL(blob);
+        
+        // Create a temporary anchor element to trigger download
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = fileName;
+        link.style.display = 'none';
+        
+        // Append to body, click, and remove
+        document.body.appendChild(link);
+        link.click();
+        
+        // Clean up: remove link and revoke blob URL
+        setTimeout(() => {
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(blobUrl);
+        }, 100);
+        return;
+      } catch (error) {
+        console.error('Error downloading CV with fetch:', error);
+        // Fall through to direct download method
+      }
+    }
+    
+    // Direct download method (works with file:// protocol and as fallback)
+    const link = document.createElement('a');
+    // Use the path as-is - browser will handle encoding
+    link.href = cvPath;
+    link.download = fileName;
+    link.setAttribute('download', fileName); // Ensure download attribute
+    link.style.display = 'none';
+    
+    document.body.appendChild(link);
+    link.click();
+    
+    setTimeout(() => {
+      if (document.body.contains(link)) {
+        document.body.removeChild(link);
+      }
+    }, 100);
   });
 }

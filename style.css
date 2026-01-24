@@ -2406,6 +2406,3 @@ body.light-mode .form-group textarea::placeholder {
   cursor: not-allowed;
   transform: none;
 }
-
-/* ---------- CONSOLIDATED RESPONSIVE STYLES FOR ALL PAGES ---------- */
-/* These styles are merged into the main responsive sections above to avoid duplication */
